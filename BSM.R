@@ -67,7 +67,7 @@ rho1 = function(S,K,t,sigma,rf,type){
 
 ui <- fluidPage(
   title = "Black-Scholes Model",
-  useShinyjs(),  # 初始化shinyjs
+  useShinyjs(),  
   tags$head(
     tags$style(HTML("
       #loginForm {
@@ -75,17 +75,17 @@ ui <- fluidPage(
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 30%; /* 控制登录表单的宽度 */
+        width: 30%; 
         padding: 20px;
         border: 1px solid #ccc;
         border-radius: 5px;
         background-color: #f9f9f9;
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
       }
-      #loginForm .btn, .submit-button { /* 目标是登录表单内的按钮和具有.submit-button类的按钮 */
-        width: 25%; /* 减小按钮宽度 */
-        margin: auto; /* 保持按钮居中 */
-        display: block; /* 确保使用块级元素布局 */
+      #loginForm .btn, .submit-button { 
+        width: 25%; 
+        margin: auto; 
+        display: block; 
       }
       #logoutButton {
         position: fixed;
@@ -124,17 +124,14 @@ ui <- fluidPage(
       }
     "))
   ),
-  uiOutput("dynamicUI")# 动态生成UI部分
+  uiOutput("dynamicUI")
 
 )
 
 
-# Server逻辑
 server <- function(input, output, session) {
-  # 使用reactiveValues跟踪登录状态
   values <- reactiveValues(loggedIn = FALSE)
   
-  # 动态生成UI内容
   output$dynamicUI <- renderUI({
     if (!values$loggedIn) {
       div(id = "loginForm",
@@ -296,18 +293,18 @@ server <- function(input, output, session) {
   observeEvent(input$login, {
     if (input$username == "Anakin" && input$password == "1234") {
       values$loggedIn <- TRUE
-      shinyjs::alert("Welcome, Master Skywalker!")  # 登录成功的弹出消息
+      shinyjs::alert("Welcome, Master Skywalker!")  
     } else {
       shinyjs::alert("Wrong Password, please try again!")
     }
   })
   
   observeEvent(input$logout, {
-    values$loggedIn <- FALSE  # 更改登录状态以显示登录界面
+    values$loggedIn <- FALSE  
   })
 }
 
-# 运行应用
+
 shinyApp(ui = ui, server = server)
 
 
